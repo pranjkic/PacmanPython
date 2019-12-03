@@ -1,1 +1,1 @@
-# ovo neka nam bude main
+# ovo ce nam biti main

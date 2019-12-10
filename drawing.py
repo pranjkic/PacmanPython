@@ -1,14 +1,14 @@
-import  pygame
+import pygame
 from wall import Wall
 from color import *
 from block import *
+
 
 def setupRoom(all_sprites_list):
 
     wall_list = pygame.sprite.RenderPlain()
 
     food_list = pygame.sprite.RenderPlain()
-
 
     walls = [[0, 0, 6, 600],
              [0, 0, 600, 6],

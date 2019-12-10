@@ -1,8 +1,8 @@
-import  pygame
+import pygame
 from color import *
 
-class Food(pygame.sprite.Sprite):
 
+class Food(pygame.sprite.Sprite):
 
     def __init__(self, color, width, height):
 

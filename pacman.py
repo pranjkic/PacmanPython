@@ -5,7 +5,7 @@ def startApp():
     screen = pygame.display.set_mode([606, 606])
     pygame.display.set_caption('Pac-Man')
     all_sprites_list = pygame.sprite.RenderPlain()
-    wall_list = setupRoomOne(all_sprites_list)
+    wall_list = setupRoom(all_sprites_list)
     wall_list.draw(screen)
     all_sprites_list.draw(screen)
     pygame.display.flip()

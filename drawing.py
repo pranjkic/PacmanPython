@@ -1,10 +1,14 @@
 import  pygame
 from wall import Wall
 from color import *
+from block import *
 
-def setupRoomOne(all_sprites_list):
+def setupRoom(all_sprites_list):
 
     wall_list = pygame.sprite.RenderPlain()
+
+    food_list = pygame.sprite.RenderPlain()
+
 
     walls = [[0, 0, 6, 600],
              [0, 0, 600, 6],
@@ -51,5 +55,25 @@ def setupRoomOne(all_sprites_list):
         wall = Wall(item[0], item[1], item[2], item[3], red)
         wall_list.add(wall)
         all_sprites_list.add(wall)
+
+
+    # drawing the blocks
+    for row in range(19):
+        for column in range(19):
+            if (row == 7 or row == 8) and (column == 8 or column == 9 or column == 10):
+                continue
+            else:
+                food = Food(red, 5, 5)
+
+                # Set a random location for the block
+                food.rect.x = 30 * column + 31
+                food.rect.y = 30 * row + 31
+
+
+                # Add the block to the list of objects
+                food_list.add(food)
+                all_sprites_list.add(food)
+
+    bll = len(food_list)
 
     return wall_list

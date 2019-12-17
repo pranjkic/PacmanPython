@@ -1,16 +1,18 @@
 from player import *
 from location import *
-from Ghosts import  *
+from Ghosts import *
+
+
 
 def setupIcons(all_sprites_list):
     pacman_collide = pygame.sprite.RenderPlain()
 
-
     Pacman = Player(w, p_h, "images/pacmanicon.png")
+    monsta_list = pygame.sprite.RenderPlain()
     all_sprites_list.add(Pacman)
     pacman_collide.add(Pacman)
 
-    monsta_list = pygame.sprite.RenderPlain()
+
     Blinky = Ghost(w - 30, b_h, "images/Blinky.png")
     monsta_list.add(Blinky)
     all_sprites_list.add(Blinky)
@@ -26,3 +28,5 @@ def setupIcons(all_sprites_list):
     Clyde = Ghost(w, c_h, "images/Clyde.png")
     monsta_list.add(Clyde)
     all_sprites_list.add(Clyde)
+
+    return Pacman, monsta_list

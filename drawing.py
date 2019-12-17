@@ -3,12 +3,11 @@ from wall import Wall
 from color import *
 from block import *
 
+wall_list = pygame.sprite.RenderPlain()
+food_list = pygame.sprite.RenderPlain()
+
 
 def setupRoom(all_sprites_list):
-
-    wall_list = pygame.sprite.RenderPlain()
-
-    food_list = pygame.sprite.RenderPlain()
 
     walls = [[0, 0, 6, 600],
              [0, 0, 600, 6],
@@ -57,7 +56,6 @@ def setupRoom(all_sprites_list):
         all_sprites_list.add(wall)
 
 
-    # drawing the blocks
     for row in range(19):
         for column in range(19):
             if (row == 7 or row == 8) and (column == 8 or column == 9 or column == 10):

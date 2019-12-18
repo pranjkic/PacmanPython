@@ -31,12 +31,11 @@ def startApp():
     c_turn = 0
     c_steps = 0
 
-
-
     Blinky = Ghost(w - 30, b_h, "images/Blinky.png")
     Pinky = Ghost(w, m_h, "images/Pinky.png")
-    Inky = Ghost(w + 30, m_h, "images/Inky.png")
-    Clyde = Ghost(w, m_h, "images/Clyde.png")
+    Inky = Ghost(i_w, m_h, "images/Inky.png")
+    Clyde = Ghost(c_w, m_h, "images/Clyde.png")
+
     (Pacman, monsta_list) = setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde)
 
     wall_list.draw(screen)

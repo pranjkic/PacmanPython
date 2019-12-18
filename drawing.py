@@ -1,6 +1,4 @@
-import pygame
 from wall import Wall
-from color import *
 from block import *
 
 wall_list = pygame.sprite.RenderPlain()
@@ -49,12 +47,10 @@ def setupRoom(all_sprites_list):
              [360, 540, 126, 6]
              ]
 
-
     for item in walls:
         wall = Wall(item[0], item[1], item[2], item[3], red)
         wall_list.add(wall)
         all_sprites_list.add(wall)
-
 
     for row in range(19):
         for column in range(19):
@@ -66,7 +62,6 @@ def setupRoom(all_sprites_list):
                 # Set a random location for the block
                 food.rect.x = 30 * column + 31
                 food.rect.y = 30 * row + 31
-
 
                 # Add the block to the list of objects
                 food_list.add(food)

@@ -1,4 +1,5 @@
-import  pygame
+import pygame
+
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):

@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
             if y_collide:
                 self.rect.top = old_y
 
-        if gate is False:
+        if gate != False:
             gate_hit = pygame.sprite.spritecollide(self, gate, False)
 
             if gate_hit:

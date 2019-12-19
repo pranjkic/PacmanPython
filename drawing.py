@@ -1,5 +1,6 @@
 from wall import Wall
 from block import *
+from iconsdrawing import *
 
 wall_list = pygame.sprite.RenderPlain()
 food_list = pygame.sprite.RenderPlain()
@@ -63,9 +64,15 @@ def setupRoom(all_sprites_list):
                 food.rect.x = 30 * column + 31
                 food.rect.y = 30 * row + 31
 
-                # Add the block to the list of objects
-                food_list.add(food)
-                all_sprites_list.add(food)
+                b_collide = pygame.sprite.spritecollide(food, wall_list, False)
+                p_collide = pygame.sprite.spritecollide(food, pacman_collide, False)
+                if b_collide:
+                    continue
+                elif p_collide:
+                    continue
+                else:
+                    food_list.add(food)
+                    all_sprites_list.add(food)
 
     bll = len(food_list)
 

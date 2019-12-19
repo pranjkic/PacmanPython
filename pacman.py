@@ -42,6 +42,7 @@ def startApp():
     all_sprites_list.draw(screen)
     pygame.display.flip()
 
+    score = 0
     done = False
     FPS = 10
     clock = pygame.time.Clock()
@@ -98,6 +99,12 @@ def startApp():
         c_steps = returned[1]
         Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
         Clyde.update(wall_list, False)
+
+        blocks_hit_list = pygame.sprite.spritecollide(Pacman, food_list, True)
+
+        # Check the list of collisions.
+        if len(blocks_hit_list) > 0:
+            score += len(blocks_hit_list)
 
         screen.fill(black)
 

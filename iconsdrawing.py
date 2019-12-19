@@ -1,5 +1,7 @@
 from Ghosts import *
 
+pacman_collide = pygame.sprite.RenderPlain()
+
 
 def setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde):
     pacman_collide = pygame.sprite.RenderPlain()

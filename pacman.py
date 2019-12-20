@@ -19,6 +19,9 @@ def startApp():
     wall_list = setupRoom(all_sprites_list)
     gate = setupGate(all_sprites_list)
 
+    pygame.font.init()
+    font = pygame.font.Font("freesansbold.ttf", 24)
+
     p_turn = 0
     p_steps = 0
 
@@ -42,6 +45,8 @@ def startApp():
     all_sprites_list.draw(screen)
     pygame.display.flip()
 
+
+    block_count = len(food_list)
     score = 0
     done = False
     FPS = 10
@@ -112,6 +117,10 @@ def startApp():
         gate.draw(screen)
         all_sprites_list.draw(screen)
         monsta_list.draw(screen)
+
+
+        text = font.render("Score: " + str(score) + "/" + str(block_count), True, blue)
+        screen.blit(text, [10, 10])
         pygame.display.flip()
 
 

@@ -132,7 +132,6 @@ def startApp():
         blocks_hit_list = pygame.sprite.spritecollide(Pacman, food_list, True)
         blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list, True)
 
-
         # Check the list of collisions.
         if len(blocks_hit_list) > 0:
             score += len(blocks_hit_list)
@@ -147,23 +146,24 @@ def startApp():
         all_sprites_list.draw(screen)
         monsta_list.draw(screen)
 
-        text = font.render("Score1: " + str(score) + "/210" , True, blue)
-        text2 = font.render("Score2: " + str(score2) + "/210" , True, blue)
+        text = font.render("Score1: " + str(score) + "/210, lives: " + str(Pacman.lives), True, blue)
+        text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(Pacman2.lives), True, blue)
         screen.blit(text, [10, 10])
-        screen.blit(text2, [435, 10])
+        screen.blit(text2, [335, 10])
 
         if (score+score2) >= 210:
-            playGame("Congratulations, you won!", 145, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
-
+            playGame("Congratulations, you won!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman, monsta_list, False)
 
         if monsta_hit_list:
-            playGame("Game Over", 210, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
+            Pacman.lives -= 1
+            playGame("Game Over", 210, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman2, monsta_list, False)
         if monsta_hit_list:
-            playGame("Game Over", 210, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
+            Pacman2.lives -= 1
+            playGame("Game Over", 210, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         pygame.display.flip()
 

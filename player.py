@@ -5,6 +5,7 @@ class Player(pygame.sprite.Sprite):
 
     change_x = 0
     change_y = 0
+    lives = 3
 
     def __init__(self, x, y, filename):
 

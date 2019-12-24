@@ -43,13 +43,14 @@ def startApp():
     Inky = Ghost(i_w, m_h, "images/Inky.png")
     Clyde = Ghost(c_w, m_h, "images/Clyde.png")
 
-    (Pacman, monsta_list) = setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde)
+    (Pacman, Pacman2, monsta_list) = setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde)
 
     wall_list.draw(screen)
     all_sprites_list.draw(screen)
     pygame.display.flip()
 
     score = 0
+    score2 = 0
     done = False
     FPS = 10
     clock = pygame.time.Clock()
@@ -81,7 +82,28 @@ def startApp():
                 if event.key == pygame.K_DOWN:
                     Pacman.changespeed(0, -30)
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    Pacman2.changespeed(-30, 0)
+                if event.key == pygame.K_d:
+                    Pacman2.changespeed(30, 0)
+                if event.key == pygame.K_w:
+                    Pacman2.changespeed(0, -30)
+                if event.key == pygame.K_s:
+                    Pacman2.changespeed(0, 30)
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_a:
+                    Pacman2.changespeed(30, 0)
+                if event.key == pygame.K_d:
+                    Pacman2.changespeed(-30, 0)
+                if event.key == pygame.K_w:
+                    Pacman2.changespeed(0, 30)
+                if event.key == pygame.K_s:
+                    Pacman2.changespeed(0, -30)
+
         Pacman.update(wall_list, gate)
+        Pacman2.update(wall_list, gate)
 
         returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
         p_turn = returned[0]
@@ -108,10 +130,15 @@ def startApp():
         Clyde.update(wall_list, False)
 
         blocks_hit_list = pygame.sprite.spritecollide(Pacman, food_list, True)
+        blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list, True)
+
 
         # Check the list of collisions.
         if len(blocks_hit_list) > 0:
             score += len(blocks_hit_list)
+
+        if len(blocks_hit_list2) > 0:
+            score2 += len(blocks_hit_list2)
 
         screen.fill(black)
 
@@ -120,21 +147,28 @@ def startApp():
         all_sprites_list.draw(screen)
         monsta_list.draw(screen)
 
-        text = font.render("Score: " + str(score) + "/210" , True, blue)
+        text = font.render("Score1: " + str(score) + "/210" , True, blue)
+        text2 = font.render("Score2: " + str(score2) + "/210" , True, blue)
         screen.blit(text, [10, 10])
+        screen.blit(text2, [435, 10])
 
-        if score == 210:
-            playGame("Congratulations, you won!", 145, all_sprites_list, food_list, monsta_list, pacman_collide,wall_list, gate)
+        if (score+score2) >= 210:
+            playGame("Congratulations, you won!", 145, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
+
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman, monsta_list, False)
 
         if monsta_hit_list:
             playGame("Game Over", 210, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
 
+        monsta_hit_list = pygame.sprite.spritecollide(Pacman2, monsta_list, False)
+        if monsta_hit_list:
+            playGame("Game Over", 210, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
+
         pygame.display.flip()
 
 
-def playGame(message, left, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate):
+def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate):
     while True:
         # ALL EVENT PROCESSING SHOULD GO BELOW THIS COMMENT
         for event in pygame.event.get():
@@ -150,6 +184,7 @@ def playGame(message, left, all_sprites_list, food_list, monsta_list, pacman_col
                     del pacman_collide
                     del wall_list
                     del gate
+                    del food_list2
 
                     startApp()
 

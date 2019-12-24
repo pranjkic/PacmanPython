@@ -4,6 +4,7 @@ from iconsdrawing import *
 
 wall_list = pygame.sprite.RenderPlain()
 food_list = pygame.sprite.RenderPlain()
+food_list2 = pygame.sprite.RenderPlain()
 
 
 def setupRoom(all_sprites_list):
@@ -72,6 +73,7 @@ def setupRoom(all_sprites_list):
                     continue
                 else:
                     food_list.add(food)
+                    food_list2.add(food)
                     all_sprites_list.add(food)
 
     bll = len(food_list)

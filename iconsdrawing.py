@@ -7,9 +7,12 @@ def setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde):
     pacman_collide = pygame.sprite.RenderPlain()
 
     Pacman = Player(w, p_h, "images/pacmanicon.png")
+    Pacman2 = Player(w, p_h2, "images/pacmanicon.png")
     monsta_list = pygame.sprite.RenderPlain()
     all_sprites_list.add(Pacman)
+    all_sprites_list.add(Pacman2)
     pacman_collide.add(Pacman)
+    pacman_collide.add(Pacman2)
 
     monsta_list.add(Blinky)
     all_sprites_list.add(Blinky)
@@ -23,4 +26,4 @@ def setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde):
     monsta_list.add(Clyde)
     all_sprites_list.add(Clyde)
 
-    return Pacman, monsta_list
+    return Pacman, Pacman2, monsta_list

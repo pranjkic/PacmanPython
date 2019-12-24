@@ -1,5 +1,6 @@
 w = 303 - 16  # Width
 p_h = (7 * 60) + 19  # Pacman height
+p_h2 = (5 * 60) + 19  # Pacman height
 m_h = (4 * 60) + 19  # Monster height
 b_h = (3 * 60) + 19  # Binky height
 i_w = 303 - 16 - 32  # Inky width

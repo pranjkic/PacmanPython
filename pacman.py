@@ -4,6 +4,11 @@ from Ghosts import *
 from location import *
 import pygame
 
+pygame.font.init()
+font = pygame.font.Font("freesansbold.ttf", 24)
+clock = pygame.time.Clock()
+screen = pygame.display.set_mode([606, 606])
+
 
 def setupGate(all_sprites_list):
     gate = pygame.sprite.RenderPlain()
@@ -13,14 +18,13 @@ def setupGate(all_sprites_list):
 
 
 def startApp():
-    screen = pygame.display.set_mode([606, 606])
     pygame.display.set_caption('Pac-Man')
     all_sprites_list = pygame.sprite.RenderPlain()
+    monsta_list = pygame.sprite.RenderPlain()
     wall_list = setupRoom(all_sprites_list)
     gate = setupGate(all_sprites_list)
 
-    pygame.font.init()
-    font = pygame.font.Font("freesansbold.ttf", 24)
+    background = pygame.Surface(screen.get_size())
 
     p_turn = 0
     p_steps = 0
@@ -45,8 +49,6 @@ def startApp():
     all_sprites_list.draw(screen)
     pygame.display.flip()
 
-
-    block_count = len(food_list)
     score = 0
     done = False
     FPS = 10
@@ -118,9 +120,52 @@ def startApp():
         all_sprites_list.draw(screen)
         monsta_list.draw(screen)
 
-
-        text = font.render("Score: " + str(score) + "/" + str(block_count), True, blue)
+        text = font.render("Score: " + str(score) + "/210" , True, blue)
         screen.blit(text, [10, 10])
+
+        if score == 210:
+            playGame("Congratulations, you won!", 145, all_sprites_list, food_list, monsta_list, pacman_collide,wall_list, gate)
+
+        monsta_hit_list = pygame.sprite.spritecollide(Pacman, monsta_list, False)
+
+        if monsta_hit_list:
+            playGame("Game Over", 210, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate)
+
+        pygame.display.flip()
+
+
+def playGame(message, left, all_sprites_list, food_list, monsta_list, pacman_collide, wall_list, gate):
+    while True:
+        # ALL EVENT PROCESSING SHOULD GO BELOW THIS COMMENT
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                if event.key == pygame.K_RETURN:
+                    del all_sprites_list
+                    del food_list
+                    del monsta_list
+                    del pacman_collide
+                    del wall_list
+                    del gate
+
+                    startApp()
+
+        w = pygame.Surface((400, 200))  # the size of your rect
+        w.set_alpha(10)  # alpha level
+        w.fill((128, 128, 128))  # this fills the entire surface
+        screen.blit(w, (100, 200))  # (0,0) are the top-left coordinates
+
+        text1 = font.render(message, True, white)
+        screen.blit(text1, [left, 233])
+
+        text2 = font.render("To play again, press ENTER.", True, white)
+        screen.blit(text2, [135, 303])
+        text3 = font.render("To quit, press ESCAPE.", True, white)
+        screen.blit(text3, [165, 333])
+
         pygame.display.flip()
 
 

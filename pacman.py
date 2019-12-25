@@ -130,7 +130,7 @@ def startApp():
         Clyde.update(wall_list, False)
 
         blocks_hit_list = pygame.sprite.spritecollide(Pacman, food_list, True)
-        blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list, True)
+        blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list2, True)
 
         # Check the list of collisions.
         if len(blocks_hit_list) > 0:

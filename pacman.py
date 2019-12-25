@@ -38,7 +38,7 @@ def startApp():
     c_turn = 0
     c_steps = 0
 
-    Blinky = Ghost(w - 30, b_h, "images/Blinky.png")
+    Blinky = Ghost(w, b_h, "images/Blinky.png")
     Pinky = Ghost(w, m_h, "images/Pinky.png")
     Inky = Ghost(i_w, m_h, "images/Inky.png")
     Clyde = Ghost(c_w, m_h, "images/Clyde.png")
@@ -146,8 +146,8 @@ def startApp():
         all_sprites_list.draw(screen)
         monsta_list.draw(screen)
 
-        text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives / 5)), True, blue)
-        text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives / 5)), True, blue)
+        text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
+        text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives)), True, blue)
         screen.blit(text, [10, 10])
         screen.blit(text2, [335, 10])
 
@@ -158,15 +158,43 @@ def startApp():
 
         if monsta_hit_list:
             Pacman.lives -= 1
+            p_turn = 0
+            p_steps = 0
+            b_turn = 0
+            b_steps = 0
+            i_turn = 0
+            i_steps = 0
+            c_turn = 0
+            c_steps = 0
+            Blinky.__init__(w, b_h, "images/Blinky.png")
+            Inky.__init__(i_w, m_h, "images/Inky.png")
+            Pinky.__init__(w, m_h, "images/Pinky.png")
+            Clyde.__init__(c_w, m_h, "images/Clyde.png")
             Pacman.__init__(w, p_h, "images/pacmanicon.png")
             if Pacman.lives <= 0:
+                text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
+                screen.blit(text, [10, 10])
                 playGame("Game Over", 210, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman2, monsta_list, False)
         if monsta_hit_list:
             Pacman2.lives -= 1
+            p_turn = 0
+            p_steps = 0
+            b_turn = 0
+            b_steps = 0
+            i_turn = 0
+            i_steps = 0
+            c_turn = 0
+            c_steps = 0
+            Blinky.__init__(w, b_h, "images/Blinky.png")
+            Inky.__init__(i_w, m_h, "images/Inky.png")
+            Pinky.__init__(w, m_h, "images/Pinky.png")
+            Clyde.__init__(c_w, m_h, "images/Clyde.png")
             Pacman2.__init__(w, p_h2, "images/pacmanicon.png")
             if Pacman2.lives <= 0:
+                text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives)), True, blue)
+                screen.blit(text2, [335, 10])
                 playGame("Game Over", 210, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         pygame.display.flip()

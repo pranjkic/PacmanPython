@@ -2,12 +2,16 @@ from drawing import *
 from iconsdrawing import *
 from Ghosts import *
 from location import *
+from DeusExMachina import *
 import pygame
+import time
+import math
 
 pygame.font.init()
 font = pygame.font.Font("freesansbold.ttf", 24)
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode([606, 606])
+extraLife = pygame.sprite.RenderPlain()
 
 
 def setupGate(all_sprites_list):
@@ -25,6 +29,13 @@ def startApp():
     gate = setupGate(all_sprites_list)
 
     background = pygame.Surface(screen.get_size())
+    startTime = float("inf")
+    heartInactive = Cherry(w, p_h2, "images/heartNotActive.jpg")
+    heartActive = Cherry(w, p_h2, "images/heart.jpg")
+    deusEx = False
+    deusExActive = False
+    pacman_picked_deus_ex = False
+    pacman2_picked_deus_ex = False
 
     p_turn = 0
     p_steps = 0
@@ -58,6 +69,19 @@ def startApp():
     while done is False:
         # ALL EVENT PROCESSING SHOULD GO BELOW THIS COMMENT
         clock.tick(FPS)
+
+        if (score + score2) >= 5 and not(deusEx):
+            all_sprites_list.add(heartInactive)
+            startTime = time.time()
+            deusEx = True
+
+        if (time.time() - startTime) >= 2:
+            all_sprites_list.remove(heartInactive)
+            all_sprites_list.add(heartActive)
+            extraLife.add(heartActive)
+            deusExActive = True
+            startTime = float("inf")
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
@@ -105,6 +129,16 @@ def startApp():
         Pacman.update(wall_list, gate)
         Pacman2.update(wall_list, gate)
 
+        if deusExActive :
+            pacman_picked_deus_ex = pygame.sprite.spritecollide(Pacman, extraLife, True)
+            pacman2_picked_deus_ex = pygame.sprite.spritecollide(Pacman2, extraLife, True)
+
+        if pacman_picked_deus_ex and deusExActive:
+            Pacman.lives += 1
+
+        if pacman2_picked_deus_ex and deusExActive:
+            Pacman2.lives += 1
+
         returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
         p_turn = returned[0]
         p_steps = returned[1]
@@ -130,7 +164,7 @@ def startApp():
         Clyde.update(wall_list, False)
 
         blocks_hit_list = pygame.sprite.spritecollide(Pacman, food_list, True)
-        blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list2, True)
+        blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list, True)
 
         # Check the list of collisions.
         if len(blocks_hit_list) > 0:

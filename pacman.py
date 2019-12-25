@@ -70,7 +70,7 @@ def startApp():
         # ALL EVENT PROCESSING SHOULD GO BELOW THIS COMMENT
         clock.tick(FPS)
 
-        if (score + score2) >= 5 and not(deusEx):
+        if (score + score2) >= 75 and not(deusEx):
             all_sprites_list.add(heartInactive)
             startTime = time.time()
             deusEx = True
@@ -204,7 +204,7 @@ def startApp():
             Inky.__init__(i_w, m_h, "images/Inky.png")
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
-            Pacman.__init__(w, p_h, "images/pacmanicon.png")
+            Pacman.__init__(w2, p1, "images/pacmanicon.png")
             if Pacman.lives <= 0:
                 text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
                 screen.blit(text, [10, 10])
@@ -225,7 +225,7 @@ def startApp():
             Inky.__init__(i_w, m_h, "images/Inky.png")
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
-            Pacman2.__init__(w, p_h2, "images/pacmanicon.png")
+            Pacman2.__init__(w1, p1, "images/pacmanicon.png")
             if Pacman2.lives <= 0:
                 text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives)), True, blue)
                 screen.blit(text2, [335, 10])

@@ -3,11 +3,13 @@ from Ghosts import *
 pacman_collide = pygame.sprite.RenderPlain()
 
 
+
+
 def setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde):
     pacman_collide = pygame.sprite.RenderPlain()
 
-    Pacman = Player(w, p_h, "images/pacmanicon.png")
-    Pacman2 = Player(w, p_h2, "images/pacmanicon.png")
+    Pacman = Player(w2, p1, "images/pacmanicon.png")
+    Pacman2 = Player(w1, p1, "images/pacmanicon.png")
     monsta_list = pygame.sprite.RenderPlain()
     all_sprites_list.add(Pacman)
     all_sprites_list.add(Pacman2)

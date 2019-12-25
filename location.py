@@ -5,6 +5,9 @@ m_h = (4 * 60) + 19  # Monster height
 b_h = (3 * 60) + 19  # Binky height
 i_w = 303 - 16 - 32  # Inky width
 c_w = 303 + (32 - 16)  # Clyde width
+w1 = 16
+p1 = 9*60 + 19
+w2 = 606 - 50
 
 Pinky_directions = [
     [0, -30, 4],

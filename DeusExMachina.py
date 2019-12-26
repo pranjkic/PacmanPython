@@ -1,7 +1,7 @@
 import pygame
 
 
-class Cherry(pygame.sprite.Sprite):
+class Heart(pygame.sprite.Sprite):
 
     def __init__(self, x, y, filename):
 

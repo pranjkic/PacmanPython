@@ -3,6 +3,7 @@ from iconsdrawing import *
 from Ghosts import *
 from location import *
 from DeusExMachina import *
+from  bonus import *
 import pygame
 import time
 import math
@@ -12,6 +13,7 @@ font = pygame.font.Font("freesansbold.ttf", 24)
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode([606, 606])
 extraLife = pygame.sprite.RenderPlain()
+bonus = pygame.sprite.RenderPlain()
 
 
 def setupGate(all_sprites_list):
@@ -30,12 +32,18 @@ def startApp():
 
     background = pygame.Surface(screen.get_size())
     startTime = float("inf")
-    heartInactive = Cherry(w, p_h2, "images/heartNotActive.jpg")
-    heartActive = Cherry(w, p_h2, "images/heart.jpg")
+    heartInactive = Heart(w, p_h2, "images/heartNotActive.jpg")
+    heartActive = Heart(w, p_h2, "images/heart.jpg")
     deusEx = False
     deusExActive = False
     pacman_picked_deus_ex = False
     pacman2_picked_deus_ex = False
+
+    cherry = Cherry(w, p_h, "images/cherry.jpg")
+    all_sprites_list.add(cherry)
+    bonus_not_picked = True
+    pacman_picked_bonus = False
+    pacman2_picked_bonus = False
 
     p_turn = 0
     p_steps = 0
@@ -81,6 +89,8 @@ def startApp():
             extraLife.add(heartActive)
             deusExActive = True
             startTime = float("inf")
+
+        bonus.add(cherry)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -138,6 +148,16 @@ def startApp():
 
         if pacman2_picked_deus_ex and deusExActive:
             Pacman2.lives += 1
+
+        pacman_picked_bonus = pygame.sprite.spritecollide(Pacman, bonus, True)
+        pacman2_picked_bonus = pygame.sprite.spritecollide(Pacman2, bonus, True)
+
+        if pacman_picked_bonus and bonus_not_picked:
+            bonus_not_picked = False
+            score += 50
+        elif pacman2_picked_bonus and bonus_not_picked:
+            bonus_not_picked = False
+            score2 += 50
 
         returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
         p_turn = returned[0]

@@ -188,10 +188,12 @@ def startApp():
 
         # Check the list of collisions.
         if len(blocks_hit_list) > 0:
-            score += len(blocks_hit_list)
+            #score += len(blocks_hit_list)
+            score += 1
 
         if len(blocks_hit_list2) > 0:
-            score2 += len(blocks_hit_list2)
+            #score2 += len(blocks_hit_list2)
+            score2 += 1
 
         screen.fill(black)
 
@@ -209,7 +211,6 @@ def startApp():
             playGame("Congratulations, you won!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman, monsta_list, False)
-
         if monsta_hit_list:
             Pacman.lives -= 1
             p_turn = 0

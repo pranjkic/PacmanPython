@@ -244,7 +244,7 @@ def startApp():
             Inky.__init__(i_w, m_h, "images/Inky.png")
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
-            Pacman.__init__(w2, p1, "images/pacmanicon.png")
+            Pacman.__init__(w2, p1, "images/pacmanman.jpg")
             if Pacman.lives <= 0 and Pacman2.lives > 0:
                 text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
                 screen.blit(text, [10, 10])
@@ -268,6 +268,7 @@ def startApp():
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
             Pacman2.__init__(w1, p1, "images/pacmangirl.jpg")
+
             if Pacman2.lives <= 0 and Pacman.lives > 0:
                 text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives)), True, blue)
                 screen.blit(text2, [335, 10])

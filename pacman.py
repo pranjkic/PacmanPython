@@ -14,6 +14,9 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode([606, 606])
 extraLife = pygame.sprite.RenderPlain()
 bonus = pygame.sprite.RenderPlain()
+globalScore1 = 0
+globalScore2 = 0
+countPlay = 0
 
 
 def setupGate(all_sprites_list):
@@ -68,6 +71,9 @@ def startApp():
     all_sprites_list.draw(screen)
     pygame.display.flip()
 
+    global countPlay
+    global globalScore1
+    global globalScore2
     score = 0
     score2 = 0
     done = False
@@ -155,9 +161,11 @@ def startApp():
         if pacman_picked_bonus and bonus_not_picked:
             bonus_not_picked = False
             score += 50
+            globalScore1 += 50
         elif pacman2_picked_bonus and bonus_not_picked:
             bonus_not_picked = False
             score2 += 50
+            globalScore2 += 50
 
         returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
         p_turn = returned[0]
@@ -188,11 +196,11 @@ def startApp():
 
         # Check the list of collisions.
         if len(blocks_hit_list) > 0:
-            #score += len(blocks_hit_list)
+            globalScore1 += 1
             score += 1
 
         if len(blocks_hit_list2) > 0:
-            #score2 += len(blocks_hit_list2)
+            globalScore2 += 1
             score2 += 1
 
         screen.fill(black)
@@ -202,13 +210,24 @@ def startApp():
         all_sprites_list.draw(screen)
         monsta_list.draw(screen)
 
-        text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
-        text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives)), True, blue)
+        text = font.render("Score1: " + str(globalScore1) + ", lives: " + str(int(Pacman.lives)), True, blue)
+        text2 = font.render("Score2: " + str(globalScore2) + ", lives: " + str(int(Pacman2.lives)), True, blue)
         screen.blit(text, [10, 10])
         screen.blit(text2, [335, 10])
 
-        if (score+score2) >= 210:
-            playGame("Congratulations, you won!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
+        if (score+score2) >= 260:
+            countPlay += 1
+            if countPlay < 5:
+                playGame("You go to the next level!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
+            else:
+                if globalScore1 > globalScore2:
+                    globalScore1 = 0
+                    globalScore2 = 0
+                    playGame("Pacman 1 is the winner!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
+                if globalScore2 > globalScore1:
+                    globalScore1 = 0
+                    globalScore2 = 0
+                    playGame("Pacman 2 is the winner!", 145, all_sprites_list, food_list, food_list2, monsta_list,pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman, monsta_list, False)
         if monsta_hit_list:
@@ -226,10 +245,12 @@ def startApp():
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
             Pacman.__init__(w2, p1, "images/pacmanicon.png")
-            if Pacman.lives <= 0:
+            if Pacman.lives <= 0 and Pacman2.lives > 0:
                 text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
                 screen.blit(text, [10, 10])
-                playGame("Game Over", 210, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
+                globalScore1 = 0
+                globalScore2 = 0
+                playGame("Game Over! Pacman 2 is the winner!", 80, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman2, monsta_list, False)
         if monsta_hit_list:
@@ -247,10 +268,12 @@ def startApp():
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
             Pacman2.__init__(w1, p1, "images/pacmanicon.png")
-            if Pacman2.lives <= 0:
+            if Pacman2.lives <= 0 and Pacman.lives > 0:
                 text2 = font.render("Score2: " + str(score2) + "/210, lives: " + str(int(Pacman2.lives)), True, blue)
                 screen.blit(text2, [335, 10])
-                playGame("Game Over", 210, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
+                globalScore1 = 0
+                globalScore2 = 0
+                playGame("Game Over! Pacman 1 is the winner!", 80, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
 
         pygame.display.flip()
 
@@ -272,13 +295,12 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
                     del wall_list
                     del gate
                     del food_list2
-
                     startApp()
 
-        w = pygame.Surface((400, 200))  # the size of your rect
+        w = pygame.Surface((500, 200))  # the size of your rect
         w.set_alpha(10)  # alpha level
         w.fill((128, 128, 128))  # this fills the entire surface
-        screen.blit(w, (100, 200))  # (0,0) are the top-left coordinates
+        screen.blit(w, (50, 200))  # (0,0) are the top-left coordinates
 
         text1 = font.render(message, True, white)
         screen.blit(text1, [left, 233])

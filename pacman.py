@@ -3,20 +3,89 @@ from iconsdrawing import *
 from Ghosts import *
 from location import *
 from DeusExMachina import *
-from  bonus import *
+from bonus import *
 import pygame
 import time
+import threading
 import math
 
 pygame.font.init()
 font = pygame.font.Font("freesansbold.ttf", 24)
 clock = pygame.time.Clock()
+clockMonsta = pygame.time.Clock()
 screen = pygame.display.set_mode([606, 606])
 extraLife = pygame.sprite.RenderPlain()
 bonus = pygame.sprite.RenderPlain()
 globalScore1 = 0
 globalScore2 = 0
 countPlay = 0
+
+p_turn = 0
+p_steps = 0
+b_turn = 0
+b_steps = 0
+i_turn = 0
+i_steps = 0
+c_turn = 0
+c_steps = 0
+FPS = 10
+FPS_monsta = 8
+
+Blinky = Ghost(w, b_h, "images/Blinky.png")
+Pinky = Ghost(w, m_h, "images/Pinky.png")
+Inky = Ghost(i_w, m_h, "images/Inky.png")
+Clyde = Ghost(c_w, m_h, "images/Clyde.png")
+
+
+def monsta_movement():
+    global p_turn
+    global p_steps
+    global b_turn
+    global b_steps
+    global i_turn
+    global i_steps
+    global c_turn
+    global c_steps
+
+    p_turn = 0
+    p_steps = 0
+    b_turn = 0
+    b_steps = 0
+    i_turn = 0
+    i_steps = 0
+    c_steps = 0
+    c_turn = 0
+
+    while True:
+        clockMonsta.tick(FPS_monsta)
+        returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
+        p_turn = returned[0]
+        p_steps = returned[1]
+        Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
+        Pinky.update(wall_list, False)
+
+        returned = Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
+        print("", end=" ") # iz nekog razloga bez ovog print-a ne radi
+        b_turn = returned[0]
+        b_steps = returned[1]
+        Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
+        Blinky.update(wall_list, False)
+
+        returned = Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
+        i_turn = returned[0]
+        i_steps = returned[1]
+        Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
+        Inky.update(wall_list, False)
+
+        returned = Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
+        c_turn = returned[0]
+        c_steps = returned[1]
+        Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
+        Clyde.update(wall_list, False)
+
+
+x = threading.Thread(target=monsta_movement, args=(), daemon=True)
+x.start()
 
 
 def setupGate(all_sprites_list):
@@ -27,6 +96,18 @@ def setupGate(all_sprites_list):
 
 
 def startApp():
+    global p_turn
+    global p_steps
+    global b_turn
+    global b_steps
+    global i_turn
+    global i_steps
+    global c_turn
+    global c_steps
+    global FPS_monsta
+    global clock
+    global clockMonsta
+
     pygame.display.set_caption('Pac-Man')
     all_sprites_list = pygame.sprite.RenderPlain()
     monsta_list = pygame.sprite.RenderPlain()
@@ -48,23 +129,6 @@ def startApp():
     pacman_picked_bonus = False
     pacman2_picked_bonus = False
 
-    p_turn = 0
-    p_steps = 0
-
-    b_turn = 0
-    b_steps = 0
-
-    i_turn = 0
-    i_steps = 0
-
-    c_turn = 0
-    c_steps = 0
-
-    Blinky = Ghost(w, b_h, "images/Blinky.png")
-    Pinky = Ghost(w, m_h, "images/Pinky.png")
-    Inky = Ghost(i_w, m_h, "images/Inky.png")
-    Clyde = Ghost(c_w, m_h, "images/Clyde.png")
-
     (Pacman, Pacman2, monsta_list) = setupIcons(all_sprites_list, Blinky, Pinky, Inky, Clyde)
 
     wall_list.draw(screen)
@@ -77,7 +141,6 @@ def startApp():
     score = 0
     score2 = 0
     done = False
-    FPS = 10
     clock = pygame.time.Clock()
 
     while done is False:
@@ -167,30 +230,6 @@ def startApp():
             score2 += 50
             globalScore2 += 50
 
-        returned = Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
-        p_turn = returned[0]
-        p_steps = returned[1]
-        Pinky.changespeed(Pinky_directions, False, p_turn, p_steps, pl)
-        Pinky.update(wall_list, False)
-
-        returned = Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
-        b_turn = returned[0]
-        b_steps = returned[1]
-        Blinky.changespeed(Blinky_directions, False, b_turn, b_steps, bl)
-        Blinky.update(wall_list, False)
-
-        returned = Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
-        i_turn = returned[0]
-        i_steps = returned[1]
-        Inky.changespeed(Inky_directions, False, i_turn, i_steps, il)
-        Inky.update(wall_list, False)
-
-        returned = Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
-        c_turn = returned[0]
-        c_steps = returned[1]
-        Clyde.changespeed(Clyde_directions, "clyde", c_turn, c_steps, cl)
-        Clyde.update(wall_list, False)
-
         blocks_hit_list = pygame.sprite.spritecollide(Pacman, food_list, True)
         blocks_hit_list2 = pygame.sprite.spritecollide(Pacman2, food_list, True)
 
@@ -218,6 +257,7 @@ def startApp():
         if (score+score2) >= 260:
             countPlay += 1
             if countPlay < 5:
+                FPS_monsta = FPS_monsta + 10
                 playGame("You go to the next level!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
             else:
                 if globalScore1 > globalScore2:
@@ -280,6 +320,16 @@ def startApp():
 
 
 def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate):
+    global FPS
+    global FPS_monsta
+    global p_turn
+    global p_steps
+    global b_turn
+    global b_steps
+    global i_turn
+    global i_steps
+    global c_turn
+    global c_steps
     while True:
         # ALL EVENT PROCESSING SHOULD GO BELOW THIS COMMENT
         for event in pygame.event.get():
@@ -296,6 +346,16 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
                     del wall_list
                     del gate
                     del food_list2
+                    FPS = 10
+                    FPS_monsta = 8
+                    p_turn = 0
+                    p_steps = 0
+                    b_turn = 0
+                    b_steps = 0
+                    i_turn = 0
+                    i_steps = 0
+                    c_turn = 0
+                    c_steps = 0
                     startApp()
 
         w = pygame.Surface((500, 200))  # the size of your rect

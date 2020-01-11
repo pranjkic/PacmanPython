@@ -257,16 +257,42 @@ def startApp():
         if (score+score2) >= 260:
             countPlay += 1
             if countPlay < 5:
-                FPS_monsta = FPS_monsta + 10
+                FPS_monsta = FPS_monsta + 2
                 playGame("You go to the next level!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
             else:
                 if globalScore1 > globalScore2:
                     globalScore1 = 0
                     globalScore2 = 0
+                    b_turn = 0
+                    b_steps = 0
+                    c_turn = 0
+                    c_steps = 0
+                    i_steps = 0
+                    i_turn = 0
+                    p_turn = 0
+                    p_steps = 0
+                    Blinky.__init__(w, b_h, "images/Blinky.png")
+                    Inky.__init__(i_w, m_h, "images/Inky.png")
+                    Pinky.__init__(w, m_h, "images/Pinky.png")
+                    Clyde.__init__(c_w, m_h, "images/Clyde.png")
+                    FPS_monsta = 8
                     playGame("Pacman 1 is the winner!", 145, all_sprites_list, food_list, food_list2, monsta_list, pacman_collide, wall_list, gate)
                 if globalScore2 > globalScore1:
                     globalScore1 = 0
                     globalScore2 = 0
+                    b_turn = 0
+                    b_steps = 0
+                    c_turn = 0
+                    c_steps = 0
+                    i_steps = 0
+                    i_turn = 0
+                    p_turn = 0
+                    p_steps = 0
+                    Blinky.__init__(w, b_h, "images/Blinky.png")
+                    Inky.__init__(i_w, m_h, "images/Inky.png")
+                    Pinky.__init__(w, m_h, "images/Pinky.png")
+                    Clyde.__init__(c_w, m_h, "images/Clyde.png")
+                    FPS_monsta = 8
                     playGame("Pacman 2 is the winner!", 145, all_sprites_list, food_list, food_list2, monsta_list,pacman_collide, wall_list, gate)
 
         monsta_hit_list = pygame.sprite.spritecollide(Pacman, monsta_list, False)
@@ -285,6 +311,7 @@ def startApp():
             Pinky.__init__(w, m_h, "images/Pinky.png")
             Clyde.__init__(c_w, m_h, "images/Clyde.png")
             Pacman.__init__(w2, p1, "images/pacmanman.jpg")
+
             if Pacman.lives <= 0 and Pacman2.lives > 0:
                 text = font.render("Score1: " + str(score) + "/210, lives: " + str(int(Pacman.lives)), True, blue)
                 screen.blit(text, [10, 10])
@@ -330,6 +357,10 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
     global i_steps
     global c_turn
     global c_steps
+    global Blinky
+    global Pinky
+    global Inky
+    global Clyde
     while True:
         # ALL EVENT PROCESSING SHOULD GO BELOW THIS COMMENT
         for event in pygame.event.get():
@@ -347,7 +378,6 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
                     del gate
                     del food_list2
                     FPS = 10
-                    FPS_monsta = 8
                     p_turn = 0
                     p_steps = 0
                     b_turn = 0
@@ -356,6 +386,10 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
                     i_steps = 0
                     c_turn = 0
                     c_steps = 0
+                    Blinky.__init__(303-16, b_h, "images/Blinky.png")
+                    Inky.__init__(i_w, m_h, "images/Inky.png")
+                    Pinky.__init__(303-16, m_h, "images/Pinky.png")
+                    Clyde.__init__(c_w, m_h, "images/Clyde.png")
                     startApp()
 
         w = pygame.Surface((500, 200))  # the size of your rect

@@ -10,7 +10,7 @@ import threading
 import math
 import socket
 
-HOST = 'localhost'  # The remote host
+HOST = '192.168.0.12'  # The remote host
 PORT = 50005  # The same port as used by the server
 s = 0
 player = -1
@@ -37,7 +37,7 @@ i_turn = 0
 i_steps = 0
 c_turn = 0
 c_steps = 0
-FPS = 15
+FPS = 17
 FPS_monsta = 3
 
 PacmanGlobal = 0
@@ -106,7 +106,6 @@ def coordRecv(s, text, wall_list, gate):
         if bin:
             koord1 = text.split(' ')[0]
             koord2 = text.split(' ')[1]
-            print(str(int(koord1)) + ' ' + str(int(koord2)))
 
             PacmanGlobal.changespeed(int(koord1), int(koord2))
             text = ''
@@ -860,7 +859,7 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
                     del wall_list
                     del gate
                     del food_list2
-                    FPS = 15
+                    FPS = 17
                     p_turn = 0
                     p_steps = 0
                     b_turn = 0

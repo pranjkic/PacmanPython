@@ -13,7 +13,6 @@ def firstSocket():
         bin = conn1.recv(5)
         text1 += str(bin, 'utf8')
         if bin:
-            print('Server1 got {0}'.format(text1))
             conn2.sendall(text1.encode('utf8'))
             text1 = ''
 
@@ -24,7 +23,6 @@ def secondSocket():
         bin = conn2.recv(5)
         text2 += str(bin, 'utf8')
         if bin:
-            print('Server2 got {0}'.format(text2))
             conn1.sendall(text2.encode('utf8'))
             text2 = ''
 

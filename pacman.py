@@ -10,7 +10,7 @@ import threading
 import math
 import socket
 
-HOST = 'localhost'  # The remote host
+HOST = '192.168.0.12'  # The remote host
 PORT = 50005  # The same port as used by the server
 s = 0
 player = -1
@@ -883,10 +883,8 @@ def playGame(message, left, all_sprites_list, food_list, food_list2, monsta_list
         text1 = font.render(message, True, white)
         screen.blit(text1, [left, 233])
 
-        text2 = font.render("To play again, press ENTER.", True, white)
-        screen.blit(text2, [135, 303])
-        text3 = font.render("To quit, press ESCAPE.", True, white)
-        screen.blit(text3, [165, 333])
+        text2 = font.render("The game is over!", True, white)
+        screen.blit(text2, [140, 303])
 
         pygame.display.flip()
 
